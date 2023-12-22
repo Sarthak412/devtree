@@ -10,11 +10,8 @@ const maven = Maven_Pro({ subsets: ["latin"], weight: ["700"] });
 export default function Home() {
   return (
     <main>
-      <NavbarTransition>
-        <Header />
-      </NavbarTransition>
       {/* Hero section component starts here */}
-      <section className={`p-6 pt-32 ${maven.className} max-w-4xl mx-auto`}>
+      <section className={`pt-32 ${maven.className}`}>
         <div className="max-w-lg mb-4">
           <TextReveal>
             <h1 className="text-6xl font-bold text-black">
@@ -28,21 +25,20 @@ export default function Home() {
             </h2>
           </LeftSlide>
         </div>
-        <LeftSlide>
-          <form className="inline-flex border rounded bg-white/50 items-center shadow-md shadow-gray-300">
-            <span className="bg-white text-black py-2 pl-2">devtree.to/</span>
-            <input
-              className="py-2 border-none outline-none bg-white text-gray-500"
-              type="text"
-            />
-            <button
-              type="submit"
-              className="bg-purple-700 shadow-md shadow-gray-300 text-white rounded-r-md px-4 py-2 hover:bg-purple-600"
-            >
-              Join for free
-            </button>
-          </form>
-        </LeftSlide>
+        {/* Add animations later after creating a separate component for Hero form  */}
+        <form className="inline-flex border rounded bg-white items-center shadow">
+          <span className="bg-white text-black py-2 pl-2">devtree.to/</span>
+          <input
+            className="py-2 border-none outline-none bg-white text-gray-500"
+            type="text"
+          />
+          <button
+            type="submit"
+            className="bg-purple-700 text-white rounded-r-md px-4 py-2 hover:bg-purple-600"
+          >
+            Join for free
+          </button>
+        </form>
       </section>
     </main>
   );

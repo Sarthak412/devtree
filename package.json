@@ -9,9 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/mongodb-adapter": "^2.0.10",
+    "@fortawesome/free-brands-svg-icons": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "framer-motion": "^10.16.16",
+    "mongodb": "^6.3.0",
     "mongoose": "^8.0.3",
     "next": "14.0.4",
+    "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18"
   },
