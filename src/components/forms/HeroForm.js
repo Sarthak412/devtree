@@ -1,6 +1,5 @@
 "use client";
 
-import LeftSlide from "@/utils/LeftSlide";
 import { signIn } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

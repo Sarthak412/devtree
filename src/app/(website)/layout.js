@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import NavbarTransition from "@/utils/HeaderTransition";
 import Header from "@/components/Header";
 

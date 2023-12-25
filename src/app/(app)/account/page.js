@@ -1,9 +1,9 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import mongoose from "mongoose";
 
 // * Actions
-import grabUsername from "@/actions/grabUsername";
 import UsernameForm from "@/components/forms/UsernameForm";
 import { Page } from "@/models/Page";
 
@@ -16,6 +16,9 @@ export default async function AccountPage({ searchParams }) {
   if (!session) {
     redirect("/");
   }
+
+  // Connect to DB
+  mongoose.connect(process.env.MONGO_URI);
 
   const page = await Page.findOne({ owner: session?.user?.email });
 

@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons";
 import LoginWithGoogle from "@/components/buttons/LoginWithGoogle";
 import LoginWithGithub from "@/components/buttons/LoginWithGithub";
 

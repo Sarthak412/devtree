@@ -4,7 +4,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Page } from "@/models/Page";
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 
 const grabUsername = async (formData) => {
   const username = formData.get("username");
