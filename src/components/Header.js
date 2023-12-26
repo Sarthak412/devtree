@@ -43,22 +43,7 @@ export default async function Header() {
           ))}
         </nav>
         <nav className="flex items-center gap-4">
-          {!session ? (
-            <>
-              <Link
-                href={"/login"}
-                className="bg-black text-white px-4 py-2 rounded-md"
-              >
-                Login
-              </Link>
-              <Link
-                href={"/login"}
-                className="text-white bg-purple-800 border border-gray-300 px-4 py-2 rounded-md hover:bg-purple-600 hover:text-white transition-all duration-300"
-              >
-                Create Account
-              </Link>
-            </>
-          ) : (
+          {session ? (
             <>
               <Link href={"/account"} className="flex gap-5">
                 <div className="flex items-center gap-3 px-4">
@@ -75,6 +60,21 @@ export default async function Header() {
                 </div>
               </Link>
               <LogoutBtn />
+            </>
+          ) : (
+            <>
+              <Link
+                href={"/login"}
+                className="bg-black text-white px-4 py-2 rounded-md"
+              >
+                Login
+              </Link>
+              <Link
+                href={"/login"}
+                className="text-white bg-purple-800 border border-gray-300 px-4 py-2 rounded-md hover:bg-purple-600 hover:text-white transition-all duration-300"
+              >
+                Create Account
+              </Link>
             </>
           )}
         </nav>

@@ -8,7 +8,7 @@ import { signIn } from "next-auth/react";
 export default function LoginWithGithub() {
   return (
     <button
-      onClick={() => signIn("github")}
+      onClick={() => signIn("github", { callbackUrl: "/" })}
       className="bg-black/90 text-center px-4 py-2.5 w-full rounded-md text-white flex items-center justify-center gap-5"
     >
       <FontAwesomeIcon icon={faGithub} className="h-5" />
