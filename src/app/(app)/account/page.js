@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 // * Actions
 import UsernameForm from "@/components/forms/UsernameForm";
 import { Page } from "@/models/Page";
+import PageSettingsForm from "@/components/forms/PageSettingsForm";
 
 export default async function AccountPage({ searchParams }) {
   const session = await getServerSession(authOptions);
@@ -23,7 +24,7 @@ export default async function AccountPage({ searchParams }) {
   const page = await Page.findOne({ owner: session?.user?.email });
 
   if (page) {
-    return <div>Your Page is /{page.uri}</div>;
+    return <PageSettingsForm page={page} user={session.user} />;
   }
 
   return (
