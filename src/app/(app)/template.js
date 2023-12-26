@@ -8,6 +8,7 @@ import Image from "next/image";
 import LogoutBtn from "@/components/buttons/LogoutBtn";
 
 import AppSidebar from "@/components/layout/AppSidebar";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,25 @@ export default async function AppTemplate({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className} flex`}>
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          // Themed Toast Notification from 'react-hot-toast'
+          toastOptions={{
+            className: "",
+            style: {
+              border: "2px solid slateblue",
+              padding: "8px",
+              paddingInline: "1.5rem",
+              color: "white",
+              background: "rgba(0, 0, 0, 0.8)",
+            },
+            iconTheme: {
+              primary: "slateblue",
+              secondary: "white",
+            },
+          }}
+        />
         <main className="flex min-h-screen">
           <aside className="bg-white border-r shadow shadow-gray-300 w-56 p-4 flex flex-col">
             <div className="rounded-full overflow-hidden border-2 border-black mt-8 aspect-square w-28 mx-auto">
