@@ -12,16 +12,24 @@ export async function saveProfileInformation(formData) {
   const session = await getServerSession(authOptions);
 
   if (session) {
-    const displayName = formData.get("displayName");
-    const location = formData.get("location");
-    const bio = formData.get("bio");
-    const bgType = formData.get("bgType");
-    const bgColor = formData.get("bgColor");
+    const dataKeys = [
+      "displayName",
+      "location",
+      "bio",
+      "bgType",
+      "bgColor",
+      "bgImage",
+    ];
 
-    await Page.updateOne(
-      { owner: session?.user?.email },
-      { displayName, location, bio, bgType, bgColor }
-    );
+    const dataToUpdate = {};
+
+    for (const key of dataKeys) {
+      if (formData.has(key)) {
+        dataToUpdate[key] = formData.get(key);
+      }
+    }
+
+    await Page.updateOne({ owner: session?.user?.email }, dataToUpdate);
 
     return true;
   }

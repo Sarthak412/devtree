@@ -19,6 +19,8 @@ export default function PageSettingsForm({ page, user }) {
 
   const [color, setBgColor] = useState(page.bgColor);
 
+  const [bgImage, setBgImage] = useState(page.bgImage);
+
   async function saveProfileInfo(formData) {
     const result = await saveProfileInformation(formData);
     if (result) {
@@ -26,10 +28,33 @@ export default function PageSettingsForm({ page, user }) {
     }
   }
 
-  function handleImageUpload(e) {
+  async function handleImageUpload(e) {
     const file = e.target.files?.[0];
+
     if (file) {
-      // Hello
+      const uploadPromise = new Promise((resolve, reject) => {
+        const data = new FormData();
+        data.set("file", file);
+        fetch("/api/upload", {
+          method: "POST",
+          body: data,
+        }).then((response) => {
+          if (response.ok) {
+            response.json().then((link) => {
+              setBgImage(link);
+              resolve();
+            });
+          } else {
+            reject();
+          }
+        });
+      });
+
+      await toast.promise(uploadPromise, {
+        loading: "Uploading Image...",
+        success: "Uploaded!",
+        error: "Upload Error!!",
+      });
     }
   }
 
@@ -37,8 +62,12 @@ export default function PageSettingsForm({ page, user }) {
     <div className="-m-4 shadow">
       <form action={saveProfileInfo}>
         <div
-          className="py-20 flex items-center justify-center"
-          style={{ backgroundColor: color }}
+          className="py-4 min-h-[250px] flex items-center justify-center bg-cover bg-center"
+          style={
+            bgType === "color"
+              ? { backgroundColor: color }
+              : { backgroundImage: `url(${bgImage})` }
+          }
         >
           <div>
             <RadioTogglers
@@ -72,7 +101,9 @@ export default function PageSettingsForm({ page, user }) {
                   type="button"
                   className="bg-white text-black shadow-sm shadow-gray-800 text-center py-2 px-3 mt-2 rounded-md font-semibold"
                 >
-                  <div className="flex items-center justify-center gap-2">
+                  <input type="hidden" name="bgImage" value={bgImage} />
+
+                  <div className="flex items-center justify-center gap-2 cursor-pointer">
                     <input
                       type="file"
                       className="hidden"
