@@ -15,10 +15,12 @@ export async function saveProfileInformation(formData) {
     const displayName = formData.get("displayName");
     const location = formData.get("location");
     const bio = formData.get("bio");
+    const bgType = formData.get("bgType");
+    const bgColor = formData.get("bgColor");
 
     await Page.updateOne(
       { owner: session?.user?.email },
-      { displayName, location, bio }
+      { displayName, location, bio, bgType, bgColor }
     );
 
     return true;
