@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  faArrowUpFromBracket,
   faFloppyDisk,
   faImage,
   faPalette,
@@ -11,8 +12,13 @@ import SubmitBtn from "../buttons/SubmitBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { saveProfileInformation } from "@/actions/pageActions";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 export default function PageSettingsForm({ page, user }) {
+  const [bgType, setBgType] = useState(page.bgType);
+
+  const [color, setBgColor] = useState(page.bgColor);
+
   async function saveProfileInfo(formData) {
     const result = await saveProfileInformation(formData);
     if (result) {
@@ -20,18 +26,71 @@ export default function PageSettingsForm({ page, user }) {
     }
   }
 
+  function handleImageUpload(e) {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Hello
+    }
+  }
+
   return (
     <div className="-m-4 shadow">
       <form action={saveProfileInfo}>
-        <div className=" bg-gradient-to-tl from-black to-blue-400 py-20 flex justify-end">
-          <RadioTogglers
-            options={[
-              { value: "color", icon: faPalette, label: "Color" },
-              { value: "image", icon: faImage, label: "Image" },
-            ]}
-          />
+        <div
+          className="py-20 flex items-center justify-center"
+          style={{ backgroundColor: color }}
+        >
+          <div>
+            <RadioTogglers
+              defaultValue={page.bgType}
+              options={[
+                { value: "color", icon: faPalette, label: "Color" },
+                { value: "image", icon: faImage, label: "Image" },
+              ]}
+              onChange={(val) => setBgType(val)}
+            />
+
+            {bgType === "color" && (
+              <div className="bg-white mt-2 px-1 rounded-lg border border-gray-300 shadow backdrop-filter backdrop-blur-sm bg-opacity-40">
+                <div className="flex gap-2 py-2 items-center justify-center">
+                  <span className="text-gray-200 font-semibold">
+                    Color Picker:{" "}
+                  </span>
+                  <input
+                    className="w-8 h-6"
+                    type="color"
+                    name="bgColor"
+                    onChange={(e) => setBgColor(e.target.value)}
+                    defaultValue={page.bgColor}
+                  />
+                </div>
+              </div>
+            )}
+            {bgType === "image" && (
+              <div className="flex items-center justify-center">
+                <label
+                  type="button"
+                  className="bg-white text-black shadow-sm shadow-gray-800 text-center py-2 px-3 mt-2 rounded-md font-semibold"
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <input
+                      type="file"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                    />
+                    <FontAwesomeIcon
+                      icon={faArrowUpFromBracket}
+                      className="h-5"
+                    />
+                    <span>Upload Image</span>
+                  </div>
+                </label>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex items-center justify-center -mb-8">
+
+        <div className="flex items-center justify-center -mb-10">
           <Image
             src={user?.image}
             alt="profile_image"
