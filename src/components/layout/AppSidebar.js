@@ -12,7 +12,7 @@ export default function AppSidebar() {
   const pathname = usePathname();
 
   return (
-    <nav className="mt-12 space-y-4 text-gray-700">
+    <nav className="mt-10 space-y-4 text-gray-700">
       <Link
         href={"/account"}
         className={
