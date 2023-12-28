@@ -5,6 +5,7 @@ import {
   faFloppyDisk,
   faImage,
   faPalette,
+  faPen,
 } from "@fortawesome/free-solid-svg-icons";
 import RadioTogglers from "../formItems/RadioTogglers";
 import Image from "next/image";
@@ -21,6 +22,8 @@ export default function PageSettingsForm({ page, user }) {
 
   const [bgImage, setBgImage] = useState(page.bgImage);
 
+  const [avatar, setAvatar] = useState(user?.image);
+
   async function saveProfileInfo(formData) {
     const result = await saveProfileInformation(formData);
     if (result) {
@@ -28,7 +31,7 @@ export default function PageSettingsForm({ page, user }) {
     }
   }
 
-  async function handleImageUpload(e) {
+  async function upload(e, callbackFn) {
     const file = e.target.files?.[0];
 
     if (file) {
@@ -41,8 +44,8 @@ export default function PageSettingsForm({ page, user }) {
         }).then((response) => {
           if (response.ok) {
             response.json().then((link) => {
-              setBgImage(link);
-              resolve();
+              callbackFn(link);
+              resolve(link);
             });
           } else {
             reject();
@@ -50,12 +53,24 @@ export default function PageSettingsForm({ page, user }) {
         });
       });
 
-      await toast.promise(uploadPromise, {
+      toast.promise(uploadPromise, {
         loading: "Uploading Image...",
         success: "Uploaded!",
         error: "Upload Error!!",
       });
     }
+  }
+
+  async function handleBgImageUpload(e) {
+    await upload(e, (link) => {
+      setBgImage(link);
+    });
+  }
+
+  async function handleProfileImageUpload(e) {
+    await upload(e, (link) => {
+      setAvatar(link);
+    });
   }
 
   return (
@@ -107,7 +122,7 @@ export default function PageSettingsForm({ page, user }) {
                     <input
                       type="file"
                       className="hidden"
-                      onChange={handleImageUpload}
+                      onChange={handleBgImageUpload}
                     />
                     <FontAwesomeIcon
                       icon={faArrowUpFromBracket}
@@ -121,14 +136,31 @@ export default function PageSettingsForm({ page, user }) {
           </div>
         </div>
 
-        <div className="flex items-center justify-center -mb-10">
-          <Image
-            src={user?.image}
-            alt="profile_image"
-            width={140}
-            height={140}
-            className="rounded-full border-4 border-white relative -top-8 shadow-md shadow-black/30"
-          />
+        <div className="flex justify-center -mb-12">
+          <div className="relative -top-8 w-[140px] h-[140px]">
+            <div className="overflow-hidden h-full rounded-full border-4 border-white shadow shadow-black/50">
+              <Image
+                src={avatar}
+                alt="profile_image"
+                width={140}
+                height={140}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <label
+              htmlFor="avatar"
+              className="absolute bottom-0 right-1 cursor-pointer p-[10px] rounded-full bg-white shadow shadow-gray-400 flex items-center hover:bg-purple-600 hover:text-white transition-all duration-300"
+            >
+              <FontAwesomeIcon icon={faPen} className="h-4" />
+            </label>
+            <input
+              onChange={handleProfileImageUpload}
+              type="file"
+              className="hidden"
+              id="avatar"
+            />
+            <input type="hidden" name="avatar" value={avatar} />
+          </div>
         </div>
         <div className="p-4">
           <label htmlFor="nameIn" className="input_label">
