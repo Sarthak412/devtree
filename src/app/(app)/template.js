@@ -47,13 +47,14 @@ export default async function AppTemplate({ children }) {
           }}
         />
         <main className="flex min-h-screen">
-          <aside className="bg-white border-r shadow shadow-gray-300 w-56 p-4 flex flex-col">
-            <div className="rounded-full overflow-hidden border-2 border-black mt-8 aspect-square w-28 mx-auto">
+          <aside className="bg-white border-r shadow shadow-gray-300 w-56 p-4 flex flex-col pt-8">
+            <div className="flex items-center justify-center rounded-full overflow-hidden border-[4px] border-gray-200 shadow-md shadow-gray-400 aspect-square w-28 mx-auto">
               <Image
                 src={session?.user?.image}
                 alt="profile image"
                 width={250}
                 height={250}
+                className="aspect-square"
               />
             </div>
             <div className="text-center flex-grow flex flex-col mx-auto">
