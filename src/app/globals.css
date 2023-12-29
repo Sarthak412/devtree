@@ -40,3 +40,7 @@ textarea {
 .radio-togglers input[type="radio"]:checked + div {
   @apply bg-purple-500 text-white;
 }
+
+.sortable-ghost {
+  opacity: 0.3;
+}
