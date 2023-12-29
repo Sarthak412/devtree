@@ -2,10 +2,15 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SectionBox from "../layout/SectionBox";
+
+import { ReactSortable } from "react-sortablejs";
+
 import {
   faFloppyDisk,
+  faGripLines,
   faLink,
   faPlus,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { socialButtons } from "../../constants/index";
@@ -15,9 +20,13 @@ import { savePageButtons } from "@/actions/pageActions";
 import toast from "react-hot-toast";
 
 export default function PageButtonsForm({ user, page }) {
-  //   const savedLinks = Object.keys(page.socialLinks);
+  const savedLinks = Object.keys(page.socialLinks);
 
-  const [activeBtn, setActiveBtn] = useState([]);
+  const pageSavedBtnInfo = savedLinks.map((k) =>
+    socialButtons.find((b) => b.key === k)
+  );
+
+  const [activeBtn, setActiveBtn] = useState(pageSavedBtnInfo);
 
   function addSocialBtn(btn) {
     setActiveBtn((prevBtn) => {
@@ -25,14 +34,20 @@ export default function PageButtonsForm({ user, page }) {
     });
   }
 
-  const availableBtn = socialButtons.filter(
-    (b1) => !activeBtn.find((b2) => b1.key === b2.key)
-  );
-
   async function saveSocialLinks(formData) {
     await savePageButtons(formData);
     toast.success("Social Links Saved");
   }
+
+  function removeLinkBtn({ key: keyToRemove }) {
+    setActiveBtn((prevBtn) => {
+      return prevBtn.filter((btn) => btn.key !== keyToRemove);
+    });
+  }
+
+  const availableBtn = socialButtons.filter(
+    (b1) => !activeBtn.find((b2) => b1.key === b2.key)
+  );
 
   return (
     <SectionBox>
@@ -42,22 +57,35 @@ export default function PageButtonsForm({ user, page }) {
           <FontAwesomeIcon icon={faLink} className="h-5 text-purple-600" />
           <span>Add Social Links</span>
         </h2>
-
-        {activeBtn.map((btn) => (
-          <div key={btn.label} className="mb-4 flex items-center">
-            <div className="w-36 flex gap-2 items-center text-gray-600 p-2">
-              <FontAwesomeIcon icon={btn.icon} className="h-5" />
-              <span className="capitalize">{btn.label}</span>
+        <ReactSortable list={activeBtn} setList={setActiveBtn}>
+          {activeBtn.map((btn) => (
+            <div key={btn.label} className="mb-4 flex items-center">
+              <div className=" w-48 flex gap-2 items-center text-gray-600 p-2">
+                <FontAwesomeIcon
+                  icon={faGripLines}
+                  className="text-gray-400 pr-4 cursor-pointer h-5"
+                />
+                <FontAwesomeIcon icon={btn.icon} className="h-5" />
+                <span className="capitalize">{btn.label}</span>
+              </div>
+              <input
+                placeholder={btn.placeholder}
+                name={btn.key}
+                defaultValue={page.socialLinks[btn.key]}
+                type="text"
+                className="profile_form rounded-md"
+                style={{ marginBottom: "0" }}
+              />
+              <button
+                onClick={() => removeLinkBtn(btn)}
+                type="button"
+                className="px-4 py-2 bg-gray-400 rounded-r-md cursor-pointer text-white hover:bg-red-500 transition-all duration-300"
+              >
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
             </div>
-            <input
-              placeholder={btn.placeholder}
-              name={btn.key}
-              type="text"
-              className="profile_form rounded-md"
-              style={{ marginBottom: "0" }}
-            />
-          </div>
-        ))}
+          ))}
+        </ReactSortable>
 
         <div className="flex flex-wrap gap-2 mt-4 border-y border-gray-300 py-4">
           {availableBtn.map((btn) => (
