@@ -58,23 +58,17 @@ export default async function AppTemplate({ children }) {
               />
             </div>
             <div className="text-center flex-grow flex flex-col mx-auto">
-              {/* Navigation Links (My Page, Analytics) at the top */}
               <AppSidebar />
-              {/* Spacer to push items to the bottom */}
-              <div className="flex-grow" />
-              {/* Logout button at the bottom */}
-              <div className="text-center flex items-center justify-center mb-5 pt-4">
+              <div className="text-center flex items-center justify-center border-t border-gray-200 mt-5 mb-5 pt-4">
                 <LogoutBtn
                   iconLeft={true}
-                  className="flex gap-5 px-5 py-2.5 text-white bg-black rounded-md items-center hover:bg-purple-800 transition-all duration-300"
+                  className="flex mt-2 gap-5 px-5 py-2.5 text-white bg-black rounded-md items-center hover:bg-purple-800 transition-all duration-300"
                 />
               </div>
             </div>
           </aside>
         </main>
-        <div className="grow">
-          <div className="bg-white m-8 p-4 shadow">{children}</div>
-        </div>
+        <div className="grow">{children}</div>
       </body>
     </html>
   );
