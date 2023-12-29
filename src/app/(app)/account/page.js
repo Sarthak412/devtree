@@ -8,6 +8,7 @@ import UsernameForm from "@/components/forms/UsernameForm";
 import { Page } from "@/models/Page";
 import PageSettingsForm from "@/components/forms/PageSettingsForm";
 import PageButtonsForm from "@/components/forms/PageButtonsForm";
+import PageLinksForm from "@/components/forms/PageLinksForm";
 
 export default async function AccountPage({ searchParams }) {
   const session = await getServerSession(authOptions);
@@ -29,6 +30,7 @@ export default async function AccountPage({ searchParams }) {
       <>
         <PageSettingsForm page={page} user={session.user} />
         <PageButtonsForm page={page} user={session.user} />
+        <PageLinksForm page={page} user={session.user} />
       </>
     );
   }
