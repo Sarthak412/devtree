@@ -36,6 +36,7 @@ const PageSchema = new Schema(
       type: String,
       default: "",
     },
+    socialLinks: { type: Object, default: {} },
   },
   { timestamps: true }
 );
