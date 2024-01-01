@@ -67,3 +67,19 @@ export async function savePageButtons(formData) {
 
   return false;
 }
+
+// Server Action to save Project Links
+export async function savePageLinks(links) {
+  mongoose.connect(process.env.MONGO_URI);
+
+  const session = await getServerSession(authOptions);
+
+  if (session) {
+    await Page.updateOne(
+      { owner: session?.user?.email },
+      { projectLinks: links }
+    );
+  } else {
+    return false;
+  }
+}
