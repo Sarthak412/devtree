@@ -37,6 +37,7 @@ const PageSchema = new Schema(
       default: "",
     },
     socialLinks: { type: Object, default: {} },
+    projectLinks: { type: Object, default: [] },
   },
   { timestamps: true }
 );
