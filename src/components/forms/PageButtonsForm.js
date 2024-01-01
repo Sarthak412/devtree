@@ -57,13 +57,13 @@ export default function PageButtonsForm({ user, page }) {
           <FontAwesomeIcon icon={faLink} className="h-5 text-purple-600" />
           <span>Add Social Links</span>
         </h2>
-        <ReactSortable list={activeBtn} setList={setActiveBtn}>
+        <ReactSortable handle=".handle" list={activeBtn} setList={setActiveBtn}>
           {activeBtn.map((btn) => (
             <div key={btn.label} className="mb-4 flex items-center">
-              <div className=" w-48 flex gap-2 items-center text-gray-600 p-2">
+              <div className="w-48 flex gap-2 items-center text-gray-600 p-2">
                 <FontAwesomeIcon
                   icon={faGripLines}
-                  className="text-gray-400 pr-4 cursor-pointer h-5"
+                  className="text-gray-400 pr-4 cursor-pointer h-5 handle"
                 />
                 <FontAwesomeIcon icon={btn.icon} className="h-5" />
                 <span className="capitalize">{btn.label}</span>
