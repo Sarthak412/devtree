@@ -8,6 +8,7 @@ import {
   faLink,
   faPlusCircle,
   faSave,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import SubmitBtn from "../buttons/SubmitBtn";
 import { useState } from "react";
@@ -69,6 +70,12 @@ export default function PageLinksForm({ page, user }) {
     });
   }
 
+  function removeProjectLink(linkKeyToRemove) {
+    setLinks((prevLinks) =>
+      [...prevLinks].filter((l) => l.key !== linkKeyToRemove)
+    );
+  }
+
   return (
     <SectionBox>
       <form action={save}>
@@ -85,10 +92,10 @@ export default function PageLinksForm({ page, user }) {
           <span>Add new project links</span>
         </button>
         <div className="px-2">
-          <ReactSortable list={links} setList={setLinks}>
+          <ReactSortable handle=".handle" list={links} setList={setLinks}>
             {links.map((link) => (
-              <div key={link.key} className="mt-8 flex items-center gap-4">
-                <div>
+              <div key={link.key} className="mt-8 flex items-center gap-6">
+                <div className="handle">
                   <FontAwesomeIcon
                     icon={faGripLines}
                     className="text-gray-500 mr-2 cursor-grab h-5"
@@ -127,11 +134,24 @@ export default function PageLinksForm({ page, user }) {
                     />
                     <label
                       htmlFor={"icon" + link.key}
-                      className="text-md text-black bg-white border cursor-pointer border-gray-300 shadow flex items-center justify-center gap-2 rounded-full mt-2 px-3 py-2 font-semibold hover:scale-95 transition-all duration-300 hover:shadow-md"
+                      className="text-md text-black bg-white mb-4 border cursor-pointer border-gray-300 shadow flex items-center justify-center gap-2 rounded-full mt-2 px-3 py-2 font-semibold hover:scale-95 transition-all duration-300 hover:shadow-md"
                     >
                       <FontAwesomeIcon icon={faCloudUpload} className="h-4" />
                       <span>Add Logo</span>
                     </label>
+                    <button
+                      type="button"
+                      onClick={() => removeProjectLink(link.key)}
+                      className=" flex gap-2 items-center bg-black px-4 py-2 rounded-full h-full hover:scale-95 transition-all duration-300 shadow-md shadow-purple-400 hover:shadow-none"
+                    >
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        className="text-white h-4"
+                      />
+                      <span className="text-white font-semibold">
+                        Remove Project
+                      </span>
+                    </button>
                   </div>
                 </div>
                 <div className="grow">
