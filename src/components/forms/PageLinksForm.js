@@ -15,11 +15,16 @@ import { faImage } from "@fortawesome/free-regular-svg-icons";
 import { ReactSortable } from "react-sortablejs";
 import { upload } from "@/libs/upload";
 import Image from "next/image";
+import { savePageLinks } from "@/actions/pageActions";
+import toast from "react-hot-toast";
 
 export default function PageLinksForm({ page, user }) {
-  const [links, setLinks] = useState(page.links || []);
+  const [links, setLinks] = useState(page.projectLinks || []);
 
-  function save() {}
+  async function save() {
+    await savePageLinks(links);
+    toast.success("Project Links Saved");
+  }
 
   function addNewProjectLink() {
     setLinks((prev) => {
@@ -49,6 +54,18 @@ export default function PageLinksForm({ page, user }) {
         });
         return newLinks;
       });
+    });
+  }
+
+  function handleLinkChange(keyOfLinkToChange, prop, e) {
+    setLinks((prev) => {
+      const newLinks = [...prev];
+      newLinks.forEach((link) => {
+        if (link.key === keyOfLinkToChange) {
+          link[prop] = e.target.value;
+        }
+      });
+      return [...prev];
     });
   }
 
@@ -85,11 +102,11 @@ export default function PageLinksForm({ page, user }) {
                   >
                     {link.icon && (
                       <Image
-                        className="object-cover w-full h-full"
+                        // className="w-full h-full"
                         src={link.icon}
                         alt={"Project Icon/Logo"}
-                        width={64}
-                        height={64}
+                        width={180}
+                        height={180}
                       />
                     )}
 
@@ -112,7 +129,7 @@ export default function PageLinksForm({ page, user }) {
                       htmlFor={"icon" + link.key}
                       className="text-md text-black bg-white border cursor-pointer border-gray-300 shadow flex items-center justify-center gap-2 rounded-full mt-2 px-3 py-2 font-semibold hover:scale-95 transition-all duration-300 hover:shadow-md"
                     >
-                      <FontAwesomeIcon icon={faCloudUpload} />
+                      <FontAwesomeIcon icon={faCloudUpload} className="h-4" />
                       <span>Add Logo</span>
                     </label>
                   </div>
@@ -120,18 +137,30 @@ export default function PageLinksForm({ page, user }) {
                 <div className="grow">
                   <label className="text-lg text-gray-600">Project Title</label>
                   <input
+                    value={link.projectTitle}
+                    onChange={(e) =>
+                      handleLinkChange(link.key, "projectTitle", e)
+                    }
                     type="text"
                     placeholder="Project Title"
                     className="profile_form"
                   />
                   <label className="text-lg text-gray-600">Description</label>
                   <input
+                    value={link.description}
+                    onChange={(e) =>
+                      handleLinkChange(link.key, "description", e)
+                    }
                     type="text"
                     placeholder="Project Description"
                     className="profile_form"
                   />
                   <label className="text-lg text-gray-600">Technologies</label>
                   <input
+                    value={link.technologies}
+                    onChange={(e) =>
+                      handleLinkChange(link.key, "technologies", e)
+                    }
                     type="text"
                     placeholder="Project Technologies"
                     className="profile_form"
@@ -140,12 +169,18 @@ export default function PageLinksForm({ page, user }) {
                     Project Live URL
                   </label>
                   <input
+                    value={link.liveLink}
+                    onChange={(e) => handleLinkChange(link.key, "liveLink", e)}
                     type="text"
                     placeholder="Project Live URL"
                     className="profile_form"
                   />
                   <label className="text-lg text-gray-600">GitHub URL</label>
                   <input
+                    value={link.githubLink}
+                    onChange={(e) =>
+                      handleLinkChange(link.key, "githubLink", e)
+                    }
                     type="text"
                     placeholder="Project GitHub Link"
                     className="profile_form"
