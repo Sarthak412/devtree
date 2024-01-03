@@ -2,10 +2,10 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{js,jsx}',
-    './components/**/*.{js,jsx}',
-    './app/**/*.{js,jsx}',
-    './src/**/*.{js,jsx}',
+    "./pages/**/*.{js,jsx}",
+    "./components/**/*.{js,jsx}",
+    "./app/**/*.{js,jsx}",
+    "./src/**/*.{js,jsx}",
   ],
   prefix: "",
   theme: {
@@ -31,7 +31,12 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      boxShadow: {
+        neurobrutalism: "0px 2px 0px rgb(168 85 246)",
+        neurobrutalism_two: "0px 2px 0px rgb(248 113 113)",
+        neurobrutalism_black: "4px 3px 0px rgb(0 0 0)",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
