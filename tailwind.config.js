@@ -34,7 +34,7 @@ module.exports = {
       boxShadow: {
         neurobrutalism: "0px 2px 0px rgb(168 85 246)",
         neurobrutalism_two: "0px 2px 0px rgb(248 113 113)",
-        neurobrutalism_black: "4px 3px 0px rgb(0 0 0)",
+        neurobrutalism_black: "4px 5px 0px rgb(0 0 0)",
       },
     },
   },
