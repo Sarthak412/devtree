@@ -2,7 +2,6 @@ import { ModeToggle } from "@/components/buttons/DarkModeToggle";
 import { socialButtons } from "@/constants";
 import { Page } from "@/models/Page";
 import { User } from "@/models/User";
-import LeftSlide from "@/utils/LeftSlide";
 import {
   faDiscord,
   faGithub,
@@ -89,7 +88,6 @@ export default async function DevtreePage({ params }) {
         ))}
       </div>
       {/* Project Links */}
-
       <div className="max-w-6xl mx-auto p-4 px-8 ">
         {page.projectLinks.map((link) => (
           <div
