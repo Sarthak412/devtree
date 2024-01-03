@@ -75,7 +75,7 @@ export default async function AppTemplate({ children }) {
                 >
                   <FontAwesomeIcon
                     icon={faLink}
-                    className="text-purple-500"
+                    className="text-purple-500 h-5"
                     size="lg"
                   />
                   <span className="text-gray-300 text-xl">/</span>
