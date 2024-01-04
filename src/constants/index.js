@@ -64,5 +64,6 @@ export const socialButtons = [
     key: "discord",
     label: "discord",
     icon: faDiscord,
+    placeholder: "Add your discord server link",
   },
 ];
