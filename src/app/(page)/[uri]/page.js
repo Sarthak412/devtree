@@ -1,5 +1,6 @@
 import { ModeToggle } from "@/components/buttons/DarkModeToggle";
-import { socialButtons } from "@/constants";
+
+import { Event } from "@/models/Event";
 import { Page } from "@/models/Page";
 import { User } from "@/models/User";
 import {
@@ -20,6 +21,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import mongoose from "mongoose";
 import Image from "next/image";
 import Link from "next/link";
+
+import { btoa } from "next/dist/compiled/@edge-runtime/primitives";
 
 export const icons = {
   email: faEnvelope,
@@ -63,6 +66,9 @@ export default async function DevtreePage({ params }) {
   const page = await Page.findOne({ uri: uri });
 
   const user = await User.findOne({ email: page.owner });
+
+  // This creates a new Event collection in the DB which will be used to create the analytics page
+  await Event.create({ uri: uri, type: "view" });
 
   return (
     <div className="bg-white/80 min-h-screen dark:bg-black/95">
@@ -155,6 +161,9 @@ export default async function DevtreePage({ params }) {
               <div className="mt-4 flex gap-4">
                 <Link
                   href={link.liveLink}
+                  ping={
+                    process.env.URL + "api/click/?url=" + btoa(link.liveLink)
+                  }
                   target="_blank"
                   className="bg-black border border-purple-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:scale-95 shadow-neurobrutalism hover:shadow-none"
                 >
@@ -166,6 +175,9 @@ export default async function DevtreePage({ params }) {
                 </Link>
                 <Link
                   href={link.githubLink}
+                  ping={
+                    process.env.URL + "api/click/?url=" + btoa(link.githubLink)
+                  }
                   target="_blank"
                   className="bg-black border border-red-400 text-white px-4 py-2 rounded-md flex gap-2 hover:scale-95 shadow-neurobrutalism_two hover:shadow-none"
                 >
