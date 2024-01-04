@@ -31,6 +31,30 @@ export const icons = {
   discord: faDiscord,
 };
 
+function socialBtnLink(key, value) {
+  if (key === "email") {
+    return `mailto:${value}`;
+  }
+  if (key === "linkedin") {
+    return value;
+  }
+  if (key === "github") {
+    return value;
+  }
+  if (key === "x") {
+    return value;
+  }
+  if (key === "instagram") {
+    return value;
+  }
+  if (key === "youtube") {
+    return value;
+  }
+  if (key === "discord") {
+    return value;
+  }
+}
+
 export default async function DevtreePage({ params }) {
   const uri = params.uri;
 
@@ -39,8 +63,6 @@ export default async function DevtreePage({ params }) {
   const page = await Page.findOne({ uri: uri });
 
   const user = await User.findOne({ email: page.owner });
-
-  console.log(page);
 
   return (
     <div className="bg-white/80 min-h-screen dark:bg-black/95">
@@ -80,15 +102,16 @@ export default async function DevtreePage({ params }) {
         {Object.keys(page.socialLinks).map((socialLink) => (
           <Link
             key={socialLink}
-            href={"/"}
-            className="rounded-full border-2 border-black p-2 dark:border-white"
+            href={socialBtnLink(socialLink, page.socialLinks[socialLink])}
+            target="_blank"
+            className="rounded-full border-2 border-black p-2 hover:bg-gradient-to-br hover:from-purple-200 hover:to-red-200 dark:border-white hover:dark:bg-gradient-to-br hover:dark:from-purple-600 hover:dark:to-red-400/25"
           >
             <FontAwesomeIcon className="w-5 h-5" icon={icons[socialLink]} />
           </Link>
         ))}
       </div>
       {/* Project Links */}
-      <div className="max-w-6xl mx-auto p-4 px-8 ">
+      <div className="max-w-6xl mx-auto p-4 px-8">
         {page.projectLinks.map((link) => (
           <div
             key={link.key}
@@ -114,7 +137,7 @@ export default async function DevtreePage({ params }) {
               </div>
             )}
 
-            <div className="flex flex-col w-full md:w-3/4">
+            <div className="flex flex-col w-full md:w-3/4 px-4">
               <div>
                 <h3 className="text-2xl text-black dark:text-white font-semibold py-1">
                   {link.projectTitle}
@@ -130,17 +153,25 @@ export default async function DevtreePage({ params }) {
                 </p>
               </div>
               <div className="mt-4 flex gap-4">
-                <button className="bg-black border border-purple-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:scale-95 shadow-neurobrutalism hover:shadow-none">
+                <Link
+                  href={link.liveLink}
+                  target="_blank"
+                  className="bg-black border border-purple-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:scale-95 shadow-neurobrutalism hover:shadow-none"
+                >
                   <FontAwesomeIcon
                     icon={faArrowUpRightFromSquare}
                     className="h-4"
                   />
                   <span>Live Link</span>
-                </button>
-                <button className="bg-black border border-red-400 text-white px-4 py-2 rounded-md flex gap-2 hover:scale-95 shadow-neurobrutalism_two hover:shadow-none">
+                </Link>
+                <Link
+                  href={link.githubLink}
+                  target="_blank"
+                  className="bg-black border border-red-400 text-white px-4 py-2 rounded-md flex gap-2 hover:scale-95 shadow-neurobrutalism_two hover:shadow-none"
+                >
                   <FontAwesomeIcon icon={faGithub} className="h-5" />
                   <span>GitHub</span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
