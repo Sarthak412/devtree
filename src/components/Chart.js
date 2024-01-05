@@ -1,77 +1,75 @@
 "use client";
 
+import { addDays, differenceInDays, parseISO, formatISO9075 } from "date-fns";
 import {
   CartesianGrid,
   Legend,
   Line,
   LineChart,
+  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 
-const data = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+export default function Chart({ data }) {
+  const xLabelKey = Object.keys(data[0]).find((key) => key !== "date");
 
-export default function Chart() {
+  const dataWithoutGaps = [];
+
+  data.forEach((value, index) => {
+    const date = value.date;
+
+    dataWithoutGaps.push({
+      date,
+      [xLabelKey]: value?.[xLabelKey] || 0,
+    });
+
+    const nextDate = data?.[index + 1]?.date;
+    if (date && nextDate) {
+      const daysBetween = differenceInDays(parseISO(nextDate), parseISO(date));
+      if (daysBetween > 0) {
+        for (let i = 1; i < daysBetween; i++) {
+          const dateBetween = formatISO9075(addDays(parseISO(date))).split(
+            " "
+          )[0];
+          dataWithoutGaps.push({
+            date: dateBetween,
+            [xLabelKey]: 0,
+          });
+        }
+      }
+    }
+  });
+
   return (
     <div>
-      <LineChart
-        width={730}
-        height={250}
-        data={data}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="pv" stroke="#8884d8" />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-      </LineChart>
+      <ResponsiveContainer width="100%" height={200}>
+        <LineChart
+          width={730}
+          height={250}
+          data={dataWithoutGaps}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        >
+          <CartesianGrid horizontal={false} strokeWidth="2" stroke="#f2f2f2" />
+          <XAxis
+            dataKey="date"
+            stroke="#999"
+            tickLine={true}
+            tickMargin={12}
+            tick={{ fill: "#aaa" }}
+            className="text-sm"
+          />
+          <YAxis axisLine={true} tickLine={false} stroke="#999" />
+          <Tooltip />
+          <Line
+            type="monotone"
+            dataKey={xLabelKey}
+            strokeWidth={2}
+            stroke="#8884d8"
+          />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 }

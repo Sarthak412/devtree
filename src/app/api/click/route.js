@@ -7,6 +7,7 @@ export async function POST(req) {
   mongoose.connect(process.env.MONGO_URI);
   const url = new URL(req.url);
   const clickedLink = atob(url.searchParams.get("url"));
-  await Event.create({ type: "click", uri: clickedLink });
+  const page = url.searchParams.get("page");
+  await Event.create({ type: "click", uri: clickedLink, page: page });
   return Response.json(true);
 }

@@ -68,7 +68,7 @@ export default async function DevtreePage({ params }) {
   const user = await User.findOne({ email: page.owner });
 
   // This creates a new Event collection in the DB which will be used to create the analytics page
-  await Event.create({ uri: uri, type: "view" });
+  await Event.create({ uri: uri, page: page.uri, type: "view" });
 
   return (
     <div className="bg-white/80 min-h-screen dark:bg-black/95">
@@ -162,7 +162,11 @@ export default async function DevtreePage({ params }) {
                 <Link
                   href={link.liveLink}
                   ping={
-                    process.env.URL + "api/click/?url=" + btoa(link.liveLink)
+                    process.env.URL +
+                    "api/click/?url=" +
+                    btoa(link.liveLink) +
+                    "&page=" +
+                    page.uri
                   }
                   target="_blank"
                   className="bg-black border border-purple-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:scale-95 shadow-neurobrutalism hover:shadow-none"
