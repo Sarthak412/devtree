@@ -3,7 +3,6 @@ import Chart from "@/components/Chart";
 import SectionBox from "@/components/layout/SectionBox";
 import { Event } from "@/models/Event";
 import { Page } from "@/models/Page";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faEye, faLink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import mongoose from "mongoose";
@@ -22,21 +21,6 @@ export default async function AnalyticsPage() {
   }
 
   const page = await Page.findOne({ owner: session?.user?.email });
-
-  // const viewsCount = await Event.countDocuments({
-  //   type: "view",
-  //   uri: page.uri,
-  // });
-
-  const githubClickCount = await Event.countDocuments({
-    type: "click",
-    uri: page.projectLinks.map((l) => l.githubLink),
-  });
-
-  const liveLinkCount = await Event.countDocuments({
-    type: "click",
-    uri: page.projectLinks.map((l) => l.liveLink),
-  });
 
   // Aggregating 1st stage
   const groupedViews = await Event.aggregate(
@@ -61,7 +45,7 @@ export default async function AnalyticsPage() {
         },
       },
     ],
-    { $order: "-_id" }
+    { $sort: { _id: -1 } }
   );
 
   const clicks = await Event.find({
