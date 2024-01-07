@@ -159,11 +159,24 @@ export default async function DevtreePage({ params }) {
                 </p>
               </div>
               <div className="mt-4 flex gap-4">
-                <a
+                <Link
                   href={link.liveLink}
-                  ping={`${process.env.URL}api/click/live/${btoa(
+                  // ping={`${process.env.URL}api/click/live?encodedLink=${btoa(
+                  //   link.liveLink
+                  // )}&pageUri=${page.uri}`}
+                  // ping={`/api/click?type=live&encodedLink=${btoa(
+                  //   link.liveLink
+                  // )}&pageUri=${page.uri}`}
+                  ping={`${
+                    process.env.URL
+                  }api/click/live?type=live&encodedLink=${btoa(
                     link.liveLink
-                  )}/${page.uri}`}
+                  )}&pageUri=${page.uri}`}
+                  // ping={`${
+                  //   process.env.URL
+                  // }api/click?type=live&encodedLink=${encodeURIComponent(
+                  //   link.liveLink
+                  // )}&pageUri=${page.uri}`}
                   target="_blank"
                   className="bg-black border border-purple-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:scale-95 shadow-neurobrutalism hover:shadow-none"
                 >
@@ -172,18 +185,26 @@ export default async function DevtreePage({ params }) {
                     className="h-4"
                   />
                   <span>Live Link</span>
-                </a>
-                <a
+                </Link>
+                <Link
                   href={link.githubLink}
-                  ping={`${process.env.URL}api/click/github/${btoa(
+                  ping={`${
+                    process.env.URL
+                  }api/click?type=github&encodedLink=${encodeURIComponent(
                     link.githubLink
-                  )}/${page.uri}`}
+                  )}&pageUri=${page.uri}`}
+                  // ping={`/api/click?type=github&encodedLink=${btoa(
+                  //   link.githubLink
+                  // )}&pageUri=${page.uri}`}
+                  // ping={`${process.env.URL}api/click/github?encodedLink=${btoa(
+                  //   link.githubLink
+                  // )}&pageUri=${page.uri}`}
                   target="_blank"
                   className="bg-black border border-red-400 text-white px-4 py-2 rounded-md flex gap-2 hover:scale-95 shadow-neurobrutalism_two hover:shadow-none"
                 >
                   <FontAwesomeIcon icon={faGithub} className="h-5" />
                   <span>GitHub</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
