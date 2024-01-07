@@ -39,6 +39,8 @@ export default function PageLinksForm({ page, user }) {
           technologies: "",
           liveLink: "",
           githubLink: "",
+          liveLinkCount: 0,
+          githubLinkCount: 0,
         },
       ];
     });

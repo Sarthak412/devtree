@@ -67,35 +67,6 @@ export default async function DevtreePage({ params }) {
 
   const user = await User.findOne({ email: page.owner });
 
-  function handleLinkChange(keyOfLinkToChange, prop, e) {
-    setLinks((prev) => {
-      const newLinks = [...prev];
-      newLinks.forEach((link) => {
-        if (link.key === keyOfLinkToChange) {
-          link[prop] = e.target.value;
-        }
-      });
-
-      // Add logic to update click count when liveLink or githubLink is clicked
-      const clickedLink = newLinks.find(
-        (link) => link.key === keyOfLinkToChange
-      );
-      if (clickedLink) {
-        const linkType =
-          prop === "liveLink"
-            ? "live"
-            : prop === "githubLink"
-            ? "github"
-            : null;
-        if (linkType) {
-          handleLinkClick(clickedLink.key, linkType); // Assuming handleLinkClick is defined in your component
-        }
-      }
-
-      return newLinks;
-    });
-  }
-
   // This creates a new Event collection in the DB which will be used to create the analytics page
   await Event.create({ uri: uri, page: page.uri, type: "view" });
 
@@ -188,15 +159,11 @@ export default async function DevtreePage({ params }) {
                 </p>
               </div>
               <div className="mt-4 flex gap-4">
-                <Link
+                <a
                   href={link.liveLink}
-                  ping={
-                    process.env.URL +
-                    "api/click/?url=" +
-                    btoa(link.liveLink) +
-                    "&page=" +
-                    page.uri
-                  }
+                  ping={`${process.env.URL}api/click/live/${btoa(
+                    link.liveLink
+                  )}/${page.uri}`}
                   target="_blank"
                   className="bg-black border border-purple-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:scale-95 shadow-neurobrutalism hover:shadow-none"
                 >
@@ -205,18 +172,18 @@ export default async function DevtreePage({ params }) {
                     className="h-4"
                   />
                   <span>Live Link</span>
-                </Link>
-                <Link
+                </a>
+                <a
                   href={link.githubLink}
-                  ping={
-                    process.env.URL + "api/click/?url=" + btoa(link.githubLink)
-                  }
+                  ping={`${process.env.URL}api/click/github/${btoa(
+                    link.githubLink
+                  )}/${page.uri}`}
                   target="_blank"
                   className="bg-black border border-red-400 text-white px-4 py-2 rounded-md flex gap-2 hover:scale-95 shadow-neurobrutalism_two hover:shadow-none"
                 >
                   <FontAwesomeIcon icon={faGithub} className="h-5" />
                   <span>GitHub</span>
-                </Link>
+                </a>
               </div>
             </div>
           </div>
