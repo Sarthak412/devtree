@@ -30,7 +30,7 @@ export default function Chart({ data }) {
       const daysBetween = differenceInDays(parseISO(nextDate), parseISO(date));
       if (daysBetween > 0) {
         for (let i = 1; i < daysBetween; i++) {
-          const dateBetween = formatISO9075(addDays(parseISO(date))).split(
+          const dateBetween = formatISO9075(addDays(parseISO(date), i)).split(
             " "
           )[0];
           dataWithoutGaps.push({

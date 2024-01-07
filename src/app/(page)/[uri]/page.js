@@ -67,6 +67,35 @@ export default async function DevtreePage({ params }) {
 
   const user = await User.findOne({ email: page.owner });
 
+  function handleLinkChange(keyOfLinkToChange, prop, e) {
+    setLinks((prev) => {
+      const newLinks = [...prev];
+      newLinks.forEach((link) => {
+        if (link.key === keyOfLinkToChange) {
+          link[prop] = e.target.value;
+        }
+      });
+
+      // Add logic to update click count when liveLink or githubLink is clicked
+      const clickedLink = newLinks.find(
+        (link) => link.key === keyOfLinkToChange
+      );
+      if (clickedLink) {
+        const linkType =
+          prop === "liveLink"
+            ? "live"
+            : prop === "githubLink"
+            ? "github"
+            : null;
+        if (linkType) {
+          handleLinkClick(clickedLink.key, linkType); // Assuming handleLinkClick is defined in your component
+        }
+      }
+
+      return newLinks;
+    });
+  }
+
   // This creates a new Event collection in the DB which will be used to create the analytics page
   await Event.create({ uri: uri, page: page.uri, type: "view" });
 

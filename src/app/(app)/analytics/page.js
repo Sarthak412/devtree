@@ -45,7 +45,7 @@ export default async function AnalyticsPage() {
         },
       },
     ],
-    { $sort: { _id: -1 } }
+    { $sort: { _id: 1 } }
   );
 
   const clicks = await Event.find({
@@ -72,7 +72,7 @@ export default async function AnalyticsPage() {
         />
       </SectionBox>
       <SectionBox>
-        {/* <div className="flex items-center gap-3 justify-center py-3 mb-4">
+        <div className="flex items-center gap-3 justify-center py-3 mb-4">
           <FontAwesomeIcon
             icon={faLink}
             size="lg"
@@ -130,7 +130,7 @@ export default async function AnalyticsPage() {
               </div>
             </div>
           </div>
-        ))} */}
+        ))}
       </SectionBox>
     </div>
   );
