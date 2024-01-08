@@ -22,6 +22,11 @@ export default async function AnalyticsPage() {
 
   const page = await Page.findOne({ owner: session?.user?.email });
 
+  // This will be used for fetching total clicks for today
+  const today = new Date();
+
+  today.setUTCHours(0, 0, 0, 0);
+
   // Aggregating 1st stage
   const groupedViews = await Event.aggregate(
     [
@@ -48,10 +53,40 @@ export default async function AnalyticsPage() {
     { $sort: { _id: 1 } }
   );
 
-  const clicks = await Event.find({
-    page: page.uri,
-    type: "click",
-  });
+  const getMostVisitedLinks = await Event.aggregate([
+    {
+      $match: { type: "click", page: page.uri },
+    },
+    {
+      $group: {
+        _id: "$uri",
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { count: -1 },
+    },
+    {
+      $limit: 5,
+    },
+  ]);
+
+  // Aggregate for total clicks for current day
+  const totalClicksToday = await Event.aggregate([
+    {
+      $match: {
+        type: "click",
+        page: page.uri, // contains page uri e.g. 'JohnDoe'
+        createdAt: { $gte: today },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        totalClicksForToday: { $sum: 1 },
+      },
+    },
+  ]);
 
   return (
     <div>
@@ -71,67 +106,39 @@ export default async function AnalyticsPage() {
           }))}
         />
       </SectionBox>
-      <SectionBox>
-        <div className="flex items-center gap-3 justify-center py-3 mb-4">
-          <FontAwesomeIcon
-            icon={faLink}
-            size="lg"
-            className="h-5 text-purple-600"
-          />
-          <span className="text-xl text-center font-semibold">
-            Project Link Views
-          </span>
+
+      <div className="bg-white m-8 p-5 shadow max-w-2xl">
+        <div className="flex py-2 px-1 justify-between border-b border-purple-100">
+          <h1 className="mb-2 font-semibold text-lg text-gray-500">
+            Most Visited Links
+          </h1>
+          <h1 className="font-regular text-gray-500 uppercase">Visitors</h1>
         </div>
-        {page.projectLinks.map((link) => (
-          <div
-            key={link.key}
-            className="flex gap-4 items-center border-t border-gray-200 py-4"
-          >
-            <div className="text-purple-600 pl-4">
-              <FontAwesomeIcon icon={faLink} size="lg" />
-            </div>
-            <div className="grow">
-              <h3 className="text-2xl font-semibold text-gray-900">
-                {link.projectTitle || "No title"}
-              </h3>
-              <div className="text-md flex flex-col gap-1">
-                <div className="flex gap-1">
-                  <span className="text-gray-500 font-semibold">
-                    Live Link:
-                  </span>
-                  <a
-                    target="_blank"
-                    href={link.liveLink}
-                    className="text-purple-600"
-                  >
-                    {link.liveLink}
-                  </a>
-                </div>
-                <div className="flex gap-1">
-                  <span className="text-gray-500 font-semibold">
-                    GitHub Link:
-                  </span>
-                  <a
-                    target="_blank"
-                    href={link.githubLink}
-                    className="text-purple-600"
-                  >
-                    {link.githubLink}
-                  </a>
-                </div>
+
+        <ul className="mt-3">
+          {getMostVisitedLinks.map((link) => (
+            <div key={link._id} className="flex justify-between px-1">
+              <div className="py-1">
+                <h1 className="text-purple-600 max-w-md">{link._id}</h1>
               </div>
+              <div>{link.count}</div>
             </div>
-            <div>
-              <div>
-                <h1>Today: </h1>
-              </div>
-              <div>
-                <h1>Total: </h1>
-              </div>
-            </div>
+          ))}
+        </ul>
+      </div>
+
+      <div className="w-fit bg-white m-8 p-5 shadow">
+        {totalClicksToday.map((click) => (
+          <div key={click.totalClicksForToday}>
+            <h1 className="text-2xl mb-4 px-2 text-center">
+              Total Clicks Today
+            </h1>
+            <h1 className="text-5xl text-center">
+              {click.totalClicksForToday}
+            </h1>
           </div>
         ))}
-      </SectionBox>
+      </div>
     </div>
   );
 }
