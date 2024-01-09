@@ -10,7 +10,7 @@ import LogoutBtn from "@/components/buttons/LogoutBtn";
 import AppSidebar from "@/components/layout/AppSidebar";
 import { Toaster } from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLink } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faLink } from "@fortawesome/free-solid-svg-icons";
 import { Page } from "@/models/Page";
 import mongoose from "mongoose";
 import Link from "next/link";
@@ -55,8 +55,8 @@ export default async function AppTemplate({ children }) {
             },
           }}
         />
-        <main className="flex min-h-screen">
-          <aside className="bg-white border-r shadow shadow-gray-300 w-56 p-8 flex flex-col pt-8">
+        <main className="md:flex min-h-screen">
+          <aside className="bg-white border-r shadow -translate-x-56 md:translate-x-0 shadow-gray-300 w-56 p-8 flex flex-col pt-8 fixed md:static left-0 top-0 bottom-0 z-20">
             <div className="sticky top-0 pt-2">
               <div className="flex items-center justify-center rounded-full overflow-hidden border-[4px] border-gray-200 shadow-md shadow-gray-400 aspect-square w-28 mx-auto">
                 <Image
