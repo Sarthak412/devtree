@@ -28,30 +28,30 @@ export default async function AnalyticsPage() {
   today.setUTCHours(0, 0, 0, 0);
 
   // Aggregating 1st stage
-  const groupedViews = await Event.aggregate(
-    [
-      {
-        $match: {
-          type: "view",
-          uri: page.uri,
-        },
+  const groupedViews = await Event.aggregate([
+    {
+      $match: {
+        type: "view",
+        uri: page.uri,
       },
-      {
-        $group: {
-          _id: {
-            $dateToString: {
-              date: "$createdAt",
-              format: "%Y-%m-%d",
-            },
-          },
-          count: {
-            $count: {},
+    },
+    {
+      $group: {
+        _id: {
+          $dateToString: {
+            date: "$createdAt",
+            format: "%Y-%m-%d",
           },
         },
+        count: {
+          $count: {},
+        },
       },
-    ],
-    { $sort: { _id: 1 } }
-  );
+    },
+    {
+      $sort: { _id: 1 },
+    },
+  ]);
 
   const getMostVisitedLinks = await Event.aggregate([
     {
@@ -107,37 +107,39 @@ export default async function AnalyticsPage() {
         />
       </SectionBox>
 
-      <div className="bg-white m-8 p-5 shadow max-w-2xl">
-        <div className="flex py-2 px-1 justify-between border-b border-purple-100">
-          <h1 className="mb-2 font-semibold text-lg text-gray-500">
-            Most Visited Links
-          </h1>
-          <h1 className="font-regular text-gray-500 uppercase">Visitors</h1>
+      <div className="grid md:grid-cols-2 lg:col-span-2 -mt-6">
+        <div className="bg-white m-8 p-5 shadow col-span-2 md:col-span-2">
+          <div className="flex py-2 px-1 justify-between border-b border-purple-100">
+            <h1 className="mb-2 font-semibold text-lg text-gray-500">
+              Most Visited Links
+            </h1>
+            <h1 className="font-regular text-gray-500 uppercase">Visitors</h1>
+          </div>
+
+          <ul className="mt-3">
+            {getMostVisitedLinks.map((link) => (
+              <div key={link._id} className="flex justify-between px-1">
+                <div className="py-2">
+                  <h1 className="text-purple-600 max-w-md">{link._id}</h1>
+                </div>
+                <div className="py-2 text-gray-600">{link.count}</div>
+              </div>
+            ))}
+          </ul>
         </div>
 
-        <ul className="mt-3">
-          {getMostVisitedLinks.map((link) => (
-            <div key={link._id} className="flex justify-between px-1">
-              <div className="py-1">
-                <h1 className="text-purple-600 max-w-md">{link._id}</h1>
-              </div>
-              <div>{link.count}</div>
+        <div className="w-fit bg-white m-8 p-5 shadow mt-4">
+          {totalClicksToday.map((click) => (
+            <div key={click.totalClicksForToday}>
+              <h1 className="text-2xl text-gray-500 font-semibold mb-4 mt-1 px-2 text-center">
+                Total Clicks Today
+              </h1>
+              <h1 className="text-7xl text-center my-12  font-extrabold text-purple-800/70">
+                {click.totalClicksForToday}
+              </h1>
             </div>
           ))}
-        </ul>
-      </div>
-
-      <div className="w-fit bg-white m-8 p-5 shadow">
-        {totalClicksToday.map((click) => (
-          <div key={click.totalClicksForToday}>
-            <h1 className="text-2xl mb-4 px-2 text-center">
-              Total Clicks Today
-            </h1>
-            <h1 className="text-5xl text-center">
-              {click.totalClicksForToday}
-            </h1>
-          </div>
-        ))}
+        </div>
       </div>
     </div>
   );
