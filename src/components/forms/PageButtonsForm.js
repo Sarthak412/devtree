@@ -51,7 +51,6 @@ export default function PageButtonsForm({ user, page }) {
 
   return (
     <SectionBox>
-      {/* {JSON.stringify(savedLinks)} */}
       <form action={saveSocialLinks}>
         <h2 className="text-xl flex items-center gap-2 font-semibold mb-3 px-1 py-1 text-gray-500">
           <FontAwesomeIcon icon={faLink} className="h-5 text-purple-600" />
@@ -87,13 +86,13 @@ export default function PageButtonsForm({ user, page }) {
           ))}
         </ReactSortable>
 
-        <div className="flex flex-wrap gap-2 mt-4 border-y border-gray-300 py-4">
+        <div className="flex flex-wrap gap-2 mx-2 mt-4 border-y border-gray-300 py-4">
           {availableBtn.map((btn) => (
             <button
               type="button"
               onClick={() => addSocialBtn(btn)}
               key={btn.key}
-              className="flex gap-2 px-4 py-2 border-2 border-gray-600 rounded-full bg-gray-300 items-center hover:bg-black/80 hover:text-white transition-all duration-300"
+              className="flex gap-2 px-4 py-2 border-2 border-gray-500 rounded-full bg-gray-300 items-center hover:bg-black/80 hover:text-white transition-all duration-300"
             >
               <FontAwesomeIcon icon={btn.icon} className="h-5" />
               <span className="font-semibold capitalize">{btn.label}</span>
