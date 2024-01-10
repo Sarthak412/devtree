@@ -44,3 +44,12 @@ textarea {
 .sortable-ghost {
   opacity: 0.3;
 }
+
+input#navCb:checked ~ aside {
+  display: block;
+  left: 0;
+}
+
+input#navCb:checked ~ .backdrop {
+  display: block;
+}
