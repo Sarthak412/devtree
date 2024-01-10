@@ -64,6 +64,11 @@ export default async function AnalyticsPage() {
       },
     },
     {
+      $match: {
+        count: { $gte: 5 },
+      },
+    },
+    {
       $sort: { count: -1 },
     },
     {
@@ -89,7 +94,7 @@ export default async function AnalyticsPage() {
   ]);
 
   return (
-    <div>
+    <div className="flex flex-col">
       <SectionBox>
         <div className="flex items-center gap-3 justify-center my-5">
           <FontAwesomeIcon
@@ -108,7 +113,7 @@ export default async function AnalyticsPage() {
       </SectionBox>
 
       <div className="grid md:grid-cols-2 lg:col-span-2 -mt-6">
-        <div className="bg-white m-8 p-5 shadow col-span-2 md:col-span-2">
+        <div className="bg-white m-8 p-5 mx-5 md:mx-8 shadow col-span-2 md:col-span-2">
           <div className="flex py-2 px-1 justify-between border-b border-purple-100">
             <h1 className="mb-2 font-semibold text-lg text-gray-500">
               Most Visited Links
