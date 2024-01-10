@@ -91,12 +91,12 @@ export default function PageLinksForm({ page, user }) {
           <FontAwesomeIcon icon={faPlusCircle} className=" px-1 h-6" />
           <span>Add new project links</span>
         </button>
-        <div className="px-2">
+        <div className="md:px-2">
           <ReactSortable handle=".handle" list={links} setList={setLinks}>
             {links.map((link) => (
               <div
                 key={link.key}
-                className="mt-8 flex flex-col md:flex-row items-center gap-6"
+                className="mt-8 flex flex-col sm:flex-row items-center gap-6"
               >
                 <div className="handle">
                   <FontAwesomeIcon
@@ -128,7 +128,7 @@ export default function PageLinksForm({ page, user }) {
                       />
                     )}
                   </div>
-                  <div className="mt-3">
+                  <div className="mt-4">
                     <input
                       type="file"
                       onChange={(e) => handleUpload(e, link.key)}
@@ -157,7 +157,7 @@ export default function PageLinksForm({ page, user }) {
                     </button>
                   </div>
                 </div>
-                <div className="grow">
+                <div className="grow w-full px-4">
                   <label className="text-lg text-gray-600">Project Title</label>
                   <input
                     value={link.projectTitle}
