@@ -94,7 +94,10 @@ export default function PageLinksForm({ page, user }) {
         <div className="px-2">
           <ReactSortable handle=".handle" list={links} setList={setLinks}>
             {links.map((link) => (
-              <div key={link.key} className="mt-8 flex items-center gap-6">
+              <div
+                key={link.key}
+                className="mt-8 flex flex-col md:flex-row items-center gap-6"
+              >
                 <div className="handle">
                   <FontAwesomeIcon
                     icon={faGripLines}
