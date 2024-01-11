@@ -133,18 +133,31 @@ export default async function AnalyticsPage() {
           </ul>
         </div>
 
-        <div className="w-fit bg-white m-8 p-5 shadow mt-4">
-          {totalClicksToday.map((click) => (
-            <div key={click.totalClicksForToday}>
+        {!totalClicksToday ? (
+          <div className="w-fit bg-white m-8 p-5 shadow mt-4">
+            <div>
               <h1 className="text-2xl text-gray-500 font-semibold mb-4 mt-1 px-2 text-center">
                 Total Clicks Today
               </h1>
               <h1 className="text-7xl text-center my-12  font-extrabold text-purple-800/70">
-                {click.totalClicksForToday}
+                0
               </h1>
             </div>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div className="w-fit bg-white m-8 p-5 shadow mt-4">
+            {totalClicksToday.map((click) => (
+              <div key={click.totalClicksForToday}>
+                <h1 className="text-2xl text-gray-500 font-semibold mb-4 mt-1 px-2 text-center">
+                  Total Clicks Today
+                </h1>
+                <h1 className="text-7xl text-center my-12  font-extrabold text-purple-800/70">
+                  {click.totalClicksForToday}
+                </h1>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
