@@ -14,12 +14,8 @@ export const links = [
     href: "/about",
   },
   {
-    title: "Pricing",
-    href: "/pricing",
-  },
-  {
-    title: "Contact",
-    href: "/contact",
+    title: "Usage Examples",
+    href: "/usage-examples",
   },
 ];
 
