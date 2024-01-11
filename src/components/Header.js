@@ -17,10 +17,10 @@ export default async function Header() {
   const session = await getServerSession(authOptions);
 
   return (
-    <header className="bg-white border-b border-gray-300 shadow py-4">
-      <div className="max-w-4xl flex justify-between mx-auto px-6">
-        <div className="flex gap-5">
-          <div className="flex items-center space-x-4">
+    <header className="bg-white border-b border-gray-300 shadow py-5">
+      <div className="max-w-4xl flex items-center justify-between mx-auto px-4">
+        <div className="flex gap-8">
+          <div className="flex items-center">
             <Link
               href={"/"}
               className={`flex items-center gap-2 ${maven.className}`}
@@ -29,19 +29,20 @@ export default async function Header() {
               <span className="text-2xl font-bold text-black">Devtree</span>
             </Link>
           </div>
+          <nav className="hidden md:inline-flex items-center gap-5 text-md mt-1 text-black">
+            {links.map((link) => (
+              <Link
+                href={link.href}
+                key={link.title}
+                className="relative group overflow-hidden"
+              >
+                {link.title}
+                <span className="w-full h-[2px] inline-flex absolute bottom-0 left-0 bg-black -translate-x-[105%] group-hover:translate-x-0 duration-300"></span>
+              </Link>
+            ))}
+          </nav>
         </div>
-        <nav className="hidden md:inline-flex items-center gap-6 text-md mt-1 text-black">
-          {links.map((link) => (
-            <Link
-              href={link.href}
-              key={link.title}
-              className="relative group overflow-hidden"
-            >
-              {link.title}
-              <span className="w-full h-[2px] inline-flex absolute bottom-0 left-0 bg-black -translate-x-[105%] group-hover:translate-x-0 duration-300"></span>
-            </Link>
-          ))}
-        </nav>
+
         <nav className="flex items-center gap-4">
           {session ? (
             <>
@@ -52,7 +53,7 @@ export default async function Header() {
                     alt="profile_picture"
                     width={35}
                     height={35}
-                    className="rounded-full border border-purple-500"
+                    className="rounded-full xs:hidden sm:block md:block border border-purple-500"
                   />
                   <h1 className="text-gray-500 hidden md:flex md:items-center">
                     {session?.user?.name}
