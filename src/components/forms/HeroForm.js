@@ -36,7 +36,7 @@ export default function HeroForm({ user }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="inline-flex items-center rounded-r-md bg-white shadow-md"
+      className="inline-flex items-center rounded-r-md bg-white shadow-md mt-3"
     >
       <span className="bg-white text-black py-3 pl-2">devtree.to/</span>
       <input

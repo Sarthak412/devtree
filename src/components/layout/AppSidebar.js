@@ -47,7 +47,7 @@ export default function AppSidebar() {
           fixedWidth={true}
           className={"w-6 h-6"}
         />
-        <span className="text-gray-600">Back to Home</span>
+        <span className="text-gray-600">Home</span>
       </Link>
     </nav>
   );

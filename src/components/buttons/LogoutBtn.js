@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut } from "next-auth/react";
 
 export default function LogoutBtn({
-  className = "bg-black/90 px-3 py-2 rounded flex items-center gap-2 text-white hover:bg-purple-700 transition-all duration-300",
+  className = "bg-purple-600 px-3 py-2 rounded flex items-center gap-2 text-white hover:bg-purple-700 transition-all duration-300",
   iconLeft = false,
 }) {
   return (
