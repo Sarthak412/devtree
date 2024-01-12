@@ -115,7 +115,7 @@ export default async function AnalyticsPage() {
       <div className="grid md:grid-cols-2 lg:col-span-2 -mt-6">
         <div className="bg-white m-8 p-5 mx-5 md:mx-8 shadow col-span-2 md:col-span-2">
           <div className="flex py-2 px-1 justify-between border-b border-purple-100">
-            <h1 className="mb-2 font-semibold text-lg text-gray-500">
+            <h1 className="mb-2 font-semibold text-xl text-gray-500">
               Most Visited Links
             </h1>
             <h1 className="font-regular text-gray-500 uppercase">Visitors</h1>
@@ -133,31 +133,18 @@ export default async function AnalyticsPage() {
           </ul>
         </div>
 
-        {!totalClicksToday ? (
-          <div className="w-fit bg-white m-8 p-5 shadow mt-4">
-            <div>
+        <div className="w-fit bg-white m-8 p-5 shadow mt-4">
+          {totalClicksToday.map((click) => (
+            <div key={click.totalClicksForToday}>
               <h1 className="text-2xl text-gray-500 font-semibold mb-4 mt-1 px-2 text-center">
                 Total Clicks Today
               </h1>
               <h1 className="text-7xl text-center my-12  font-extrabold text-purple-800/70">
-                0
+                {click.totalClicksForToday}
               </h1>
             </div>
-          </div>
-        ) : (
-          <div className="w-fit bg-white m-8 p-5 shadow mt-4">
-            {totalClicksToday.map((click) => (
-              <div key={click.totalClicksForToday}>
-                <h1 className="text-2xl text-gray-500 font-semibold mb-4 mt-1 px-2 text-center">
-                  Total Clicks Today
-                </h1>
-                <h1 className="text-7xl text-center my-12  font-extrabold text-purple-800/70">
-                  {click.totalClicksForToday}
-                </h1>
-              </div>
-            ))}
-          </div>
-        )}
+          ))}
+        </div>
       </div>
     </div>
   );
