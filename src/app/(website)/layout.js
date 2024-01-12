@@ -20,6 +20,13 @@ export default function RootLayout({ children }) {
           </NavbarTransition>
         </main>
         <div className="max-w-4xl mx-auto p-6">{children}</div>
+        <footer className="w-full py-5 bg-black/50 flex items-center justify-center text-center">
+          <div>
+            <h1 className="text-gray-300/95 text-xl">
+              &copy; 2024 Devtree. All rights reserved.
+            </h1>
+          </div>
+        </footer>
       </body>
     </html>
   );
