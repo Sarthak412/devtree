@@ -71,7 +71,7 @@ export default async function DevtreePage({ params }) {
   await Event.create({ uri: uri, page: page.uri, type: "view" });
 
   return (
-    <div className="bg-white/80 min-h-screen dark:bg-black/95">
+    <div className="bg-white/90 min-h-screen dark:bg-black/95">
       <div
         className="h-36 bg-gray-300 bg-cover bg-center"
         style={
@@ -138,7 +138,7 @@ export default async function DevtreePage({ params }) {
 
             {/* If icon is not present it loads a default icon */}
             {!link.icon && (
-              <div className="w-1/2 md:w-1/5 relative flex items-center justify-center bg-purple-400/40 border-2 py-5 -left-6">
+              <div className="hidden w-1/2 md:w-1/5 relative sm:flex items-center justify-center bg-black/40 border-black text-white dark:bg-purple-400/40 border-2 py-5 -left-6">
                 <FontAwesomeIcon icon={faImage} className="h-20" />
               </div>
             )}
