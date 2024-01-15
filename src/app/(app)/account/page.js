@@ -9,6 +9,7 @@ import { Page } from "@/models/Page";
 import PageSettingsForm from "@/components/forms/PageSettingsForm";
 import PageButtonsForm from "@/components/forms/PageButtonsForm";
 import PageLinksForm from "@/components/forms/PageLinksForm";
+import { cloneDeep } from "lodash";
 
 export default async function AccountPage({ searchParams }) {
   const session = await getServerSession(authOptions);
@@ -25,19 +26,22 @@ export default async function AccountPage({ searchParams }) {
 
   const page = await Page.findOne({ owner: session?.user?.email });
 
-  if (page) {
+  if (!page) {
     return (
-      <>
-        <PageSettingsForm page={page} user={session.user} />
-        <PageButtonsForm page={page} user={session.user} />
-        <PageLinksForm page={page} user={session.user} />
-      </>
+      <div>
+        <UsernameForm desiredUsername={desiredUsername} />
+      </div>
     );
   }
 
+  const leanPage = cloneDeep(page.toJSON());
+  leanPage._id = leanPage._id.toString();
+
   return (
-    <div className="bg-white border shadow rounded-md max-w-md py-5 mx-auto">
-      <UsernameForm desiredUsername={desiredUsername} />
-    </div>
+    <>
+      <PageSettingsForm page={leanPage} user={session.user} />
+      <PageButtonsForm page={leanPage} user={session.user} />
+      <PageLinksForm page={leanPage} user={session.user} />
+    </>
   );
 }
