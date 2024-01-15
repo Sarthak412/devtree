@@ -65,7 +65,17 @@ export default async function DevtreePage({ params }) {
 
   const page = await Page.findOne({ uri: uri });
 
+  // Handling the case if a page is not found
+  if (!page) {
+    return <div> Page not found </div>;
+  }
+
   const user = await User.findOne({ email: page.owner });
+
+  // Handling the case if a user is not found
+  if (!user) {
+    return <div> User not found </div>;
+  }
 
   // This creates a new Event collection in the DB which will be used to create the analytics page
   await Event.create({ uri: uri, page: page.uri, type: "view" });
