@@ -20,7 +20,8 @@ import { savePageButtons } from "@/actions/pageActions";
 import toast from "react-hot-toast";
 
 export default function PageButtonsForm({ user, page }) {
-  const savedLinks = Object.keys(page.socialLinks);
+  // Checking if page is undefined or null and setting an empty object as fallback
+  const savedLinks = Object.keys(page?.socialLinks || {});
 
   const pageSavedBtnInfo = savedLinks.map((k) =>
     socialButtons.find((b) => b.key === k)
@@ -70,7 +71,7 @@ export default function PageButtonsForm({ user, page }) {
               <input
                 placeholder={btn.placeholder}
                 name={btn.key}
-                defaultValue={page.socialLinks[btn.key]}
+                defaultValue={page.socialLinks ? page.socialLinks[btn.key] : ""}
                 type="text"
                 className="profile_form rounded-md"
                 style={{ marginBottom: "0" }}
