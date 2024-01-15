@@ -59,7 +59,7 @@ export default async function AppTemplate({ children }) {
         />
         <main className="md:flex md:min-h-screen">
           <label
-            for="navCb"
+            htmlFor="navCb"
             className="md:hidden ml-8 mt-6 bg-white px-5 py-3 shadow rounded-md inline-flex items-center gap-3 cursor-pointer"
           >
             <FontAwesomeIcon icon={faBars} />
