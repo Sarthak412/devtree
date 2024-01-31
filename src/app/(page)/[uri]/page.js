@@ -169,39 +169,43 @@ export default async function DevtreePage({ params }) {
                 </p>
               </div>
               <div className="mt-4 flex gap-4">
-                <Link
-                  href={link.liveLink}
-                  target="_blank"
-                  ping={
-                    process.env.URL +
-                    "api/click?url=" +
-                    btoa(link.liveLink) +
-                    "&page=" +
-                    page.uri
-                  }
-                  className="bg-black border border-purple-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:scale-95 shadow-neurobrutalism hover:shadow-none"
-                >
-                  <FontAwesomeIcon
-                    icon={faArrowUpRightFromSquare}
-                    className="h-4"
-                  />
-                  <span>Live Link</span>
-                </Link>
-                <Link
-                  href={link.githubLink}
-                  target="_blank"
-                  ping={
-                    process.env.URL +
-                    "api/click?url=" +
-                    btoa(link.githubLink) +
-                    "&page=" +
-                    page.uri
-                  }
-                  className="bg-black border border-red-400 text-white px-4 py-2 rounded-md flex gap-2 hover:scale-95 shadow-neurobrutalism_two hover:shadow-none"
-                >
-                  <FontAwesomeIcon icon={faGithub} className="h-5" />
-                  <span>GitHub</span>
-                </Link>
+                {link.liveLink && (
+                  <Link
+                    href={link.liveLink}
+                    target="_blank"
+                    ping={
+                      process.env.URL +
+                      "api/click?url=" +
+                      btoa(link.liveLink) +
+                      "&page=" +
+                      page.uri
+                    }
+                    className="bg-black border border-purple-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:scale-95 shadow-neurobrutalism hover:shadow-none"
+                  >
+                    <FontAwesomeIcon
+                      icon={faArrowUpRightFromSquare}
+                      className="h-4"
+                    />
+                    <span>Live Link</span>
+                  </Link>
+                )}
+                {link.githubLink && (
+                  <Link
+                    href={link.githubLink}
+                    target="_blank"
+                    ping={
+                      process.env.URL +
+                      "api/click?url=" +
+                      btoa(link.githubLink) +
+                      "&page=" +
+                      page.uri
+                    }
+                    className="bg-black border border-red-400 text-white px-4 py-2 rounded-md flex gap-2 hover:scale-95 shadow-neurobrutalism_two hover:shadow-none"
+                  >
+                    <FontAwesomeIcon icon={faGithub} className="h-5" />
+                    <span>GitHub</span>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
